@@ -1,8 +1,14 @@
 import {
   GET_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
   PROFILE_ERROR,
   CLEAR_PROFILE,
-  CREATE_PROFILE
+  CREATE_PROFILE,
+  ADD_EXPERIENCE,
+  ADD_EDUCATION,
+  DELETE_EXPERIENCE,
+  DELETE_EDUCATION
 } from '../actions/types';
 
 const initialState = {
@@ -19,9 +25,19 @@ export default function(state = initialState, action) {
   switch (type) {
     case GET_PROFILE:
     case CREATE_PROFILE:
+    case ADD_EXPERIENCE:
+    case ADD_EDUCATION:
+    case DELETE_EXPERIENCE:
+    case DELETE_EDUCATION:
       return {
         ...state,
         profile: payload,
+        loading: false
+      };
+    case GET_PROFILES:
+      return {
+        ...state,
+        profiles: payload,
         loading: false
       };
     case PROFILE_ERROR:
@@ -35,6 +51,12 @@ export default function(state = initialState, action) {
         ...state,
         profile: null,
         repos: [],
+        loading: false
+      };
+    case GET_REPOS:
+      return {
+        ...state,
+        repos: payload,
         loading: false
       };
     default:
