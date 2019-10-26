@@ -1,24 +1,20 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import { addComment } from '../../actions/post';
 import PropTypes from 'prop-types';
-import { set } from 'mongoose';
 
-const PostHeader = ({ createPost }) => {
+const CommentForm = ({ postID, addComment }) => {
   const [text, setText] = useState('');
 
   const handleSubmit = () => {
-    createPost({ text });
+    addComment(postID, { text });
     setText('');
   };
   return (
     <Fragment>
-      <h1 className='large text-primary'>Posts</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Welcome to the community!
-      </p>
-
       <div className='post-form'>
         <div className='bg-primary p'>
-          <h3>Say Something...</h3>
+          <h3>Leave a comment</h3>
         </div>
         <form className='form my-1' onSubmit={handleSubmit}>
           <textarea
@@ -37,8 +33,11 @@ const PostHeader = ({ createPost }) => {
   );
 };
 
-PostHeader.propTypes = {
-  createPost: PropTypes.func.isRequired
+CommentForm.propTypes = {
+  addComment: PropTypes.func.isRequired
 };
 
-export default PostHeader;
+export default connect(
+  null,
+  { addComment }
+)(CommentForm);
